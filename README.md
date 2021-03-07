@@ -1,2 +1,2 @@
 # Newton Cradle Pygame
- Simple Newton Cradle - with perfect elastic impacts
+ Simple Newton Cradle simulation - with perfect elastic impacts
