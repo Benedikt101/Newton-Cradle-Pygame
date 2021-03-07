@@ -21,7 +21,7 @@ diameter = 50
 len = 250
 starty = 62
 startx = width / 2  - numberofcradles * diameter / 2
-angle = 0 #math.pi / 3
+angle = 0
 angVel = 0
 angAcc = 0
 force = 0
@@ -44,10 +44,10 @@ class Pendulum():
     def updatePosition(self):
         self.positionofcradlex = len * math.sin(self.angle) + self.originx - diameter/2
         self.positionofcradley = len * math.cos(self.angle) + self.originy - diameter/2
+        self.collider = pygame.Rect(self.positionofcradlex, self.positionofcradley,diameter,diameter)
     def updatePendulum(self):
         self.arm = pygame.draw.aaline(screen, black, [self.originx, self.originy], [self.positionofcradlex + diameter/2, self.positionofcradley + diameter/2])
         self.bob = pygame.draw.ellipse(screen, silver, [self.positionofcradlex, self.positionofcradley, diameter, diameter], 0)
-        self.collider = pygame.Rect(self.positionofcradlex, self.positionofcradley,diameter,diameter)
         #pygame.draw.rect(screen, black, self.collider, 2)
 
     def checkCollision(self):
@@ -67,15 +67,11 @@ class Pendulum():
                     v1 = self.vel
                     v2 = j.vel
                     self.vel = (v1 + 2 * v2 - v1) / 2
-                    #i.angle += (2500*i.vel)/(len*numberofcradles)
                     j.vel = (v2 + 2 * v1 - v2) / 2
-                    #j.angle += (2500*j.vel)/(len*numberofcradles)
-                    #collisions.append((j, i))
                     self.updatePosition()
                     j.updatePosition()
                     self.updatePendulum()
                     j.updatePendulum()
-                    #pygame.display.flip()
 
 
 #Game
@@ -92,7 +88,7 @@ collisions = []
 counter = 0
 
 for i in range(numberofcradles):
-    Pendulums.append(Pendulum([startx + diameter * i, starty], 0, len)) #angle if i == 0 else
+    Pendulums.append(Pendulum([startx + diameter * i, starty], 0, len))
 
 while active:
     for event in pygame.event.get():
@@ -119,24 +115,7 @@ while active:
 
     dt = clock.tick()
     time_elapsed_since_last_action += dt
-    """for i in Pendulums:
-        for j in Pendulums:
-            if j != i:
-                if i.collider.colliderect(j.collider):
-                    i.angle -= i.vel
-                    j.angle -= j.vel
-                    v1 = i.vel
-                    v2 = j.vel
-                    i.vel = (v1 + 2 * v2 - v1) / 2
-                    #i.angle += (2500*i.vel)/(len*numberofcradles)
-                    j.vel = (v2 + 2 * v1 - v2) / 2
-                    #j.angle += (2500*j.vel)/(len*numberofcradles)
-                    #collisions.append((j, i))
-                    i.updatePosition()
-                    j.updatePosition()
-                    i.updatePendulum()
-                    j.updatePendulum()
-                    pygame.display.flip()"""
+
 
     if time_elapsed_since_last_action > 8:
         screen.fill(white)
