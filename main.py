@@ -10,7 +10,7 @@ black = (0, 0, 0)
 silver = (197, 201, 199)
 
 #newton_crade_settings
-numberofcradles = 2
+numberofcradles = 5
 massofsphere = 20
 
 
@@ -54,15 +54,15 @@ class Pendulum():
         for j in Pendulums:
             if j != self:
                 if self.collider.colliderect(j.collider):
-                    if abs(self.vel) < 0.0002 and self.vel != 0:
-                        if self.vel > 0:
-                            self.angle -= 0.001
-                        else:
-                            self.angle += 0.001
+                    #if abs(self.vel) < 0.0002 and self.vel != 0:
+                    #    if self.vel > 0:
+                    #        self.angle -= 0.001
+                    #    else:
+                    #        self.angle += 0.001
                     if self.vel > 0:
-                        self.angle -= 2.5*self.vel + abs(j.vel)
+                        self.angle -= 2.5*self.vel #die *2.5 weil 1 nicht reicht. Aber ich verstehe halt literally nicht warum
                     else:
-                        self.angle += -2.5*self.vel - abs(j.vel)
+                        self.angle += -2.5*self.vel #- j.vel o.ä. = War einfach bullshit
                     self.updatePosition()
                     v1 = self.vel
                     v2 = j.vel
